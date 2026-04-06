@@ -3,9 +3,7 @@ kind: Kustomization
 
 namespace: myapp-dev
 
-namePrefix: ""
-
-bases:
+resources:
   - ../../base
 
 patches:
@@ -24,8 +22,10 @@ images:
   - name: nginx
     newTag: "1.25"
 
-commonLabels:
-  environment: dev
+labels:
+  - pairs:
+      environment: dev
+    includeSelectors: false
 
 commonAnnotations:
   managed-by: argocd
