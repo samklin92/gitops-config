@@ -3,9 +3,7 @@ kind: Kustomization
 
 namespace: myapp-prod
 
-namePrefix: ""
-
-bases:
+resources:
   - ../../base
 
 patches:
@@ -24,8 +22,10 @@ images:
   - name: nginx
     newTag: "1.25"
 
-commonLabels:
-  environment: prod
+labels:
+  - pairs:
+      environment: prod
+    includeSelectors: false
 
 commonAnnotations:
   managed-by: argocd
