@@ -14,7 +14,9 @@ spec:
     spec:
       containers:
         - name: myapp
-          image: nginx:1.26
+         images:
+  - name: nginx
+    newTag: "1.26"    # was 1.25
           ports:
             - containerPort: 80
           resources:

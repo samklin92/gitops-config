@@ -20,4 +20,4 @@ patches:
 
 images:
   - name: nginx
-    newTag: "1.25"
+    newTag: "1.26"    # was 1.25
