@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: myapp
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - env: dev
+            replicas: "2"
+          - env: staging
+            replicas: "3"
+          - env: prod
+            replicas: "5"
+
+  template:
+    metadata:
+      name: "myapp-{{env}}"
+    spec:
+      project: default
+
+      source:
+        repoURL: https://github.com/samklin92/gitops-config.git
+        targetRevision: main
+        path: "apps/overlays/{{env}}"
+
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "myapp-{{env}}"
+
+      syncPolicy:
+        automated:
+          selfHeal: true
+          prune: true
+        syncOptions:
+          - CreateNamespace=true
