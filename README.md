@@ -1,7 +1,7 @@
 # DevOps Engineering Portfolio
 ## Terraform → ArgoCD → Multi-cluster Kubernetes
 
-> **Author:** Samuel Klin  
+> **Author:** Ogaji Igwe Samuel  
 > **Timeline:** April 2026  
 > **Status:** Phases 1–3 Complete · Capstone in progress
 
