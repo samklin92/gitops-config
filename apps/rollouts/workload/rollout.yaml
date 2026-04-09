@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: myapp
+  namespace: myapp-canary
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+        - name: myapp
+          image: nginx:1.25
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
+  strategy:
+    canary:
+      steps:
+        - setWeight: 20      # send 20% traffic to new version
+        - pause: {duration: 30s}
+        - setWeight: 50      # send 50% traffic to new version
+        - pause: {duration: 30s}
+        - setWeight: 100     # send 100% traffic to new version
+      canaryService: myapp-canary
+      stableService: myapp-stable
